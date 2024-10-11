@@ -18,10 +18,22 @@ namespace SaaS.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Calcolo([FromForm(Name = "Valore")] int Valore)
+        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
         {
-            int numero = Valore * 2;
-            return View("Index" ,numero);
+            decimal netto = lordo * 0.8m;
+            decimal mesenetto = 0;
+            decimal meselordo = 0;
+            meselordo = lordo / 13;
+            mesenetto = netto / 13;
+            CalcoloViewModel calcoloViewModel = new CalcoloViewModel
+            {
+                Lordo = lordo,
+                Netto = netto ,
+                MeseLordo = meselordo,
+                MeseNetto = mesenetto
+            };
+            
+            return View("Index" , calcoloViewModel);
         }
 
         public IActionResult Privacy()

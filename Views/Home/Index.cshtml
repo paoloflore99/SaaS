@@ -1,7 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
+﻿@model CalcoloViewModel
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -12,7 +9,7 @@
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <strong>Nome:</strong>
-            <input type="number" name="Valore" value="" />
+            <input type="number" name="lordo" value="" />
         </div>
 
         <div class="text-end">
@@ -20,6 +17,29 @@
         </div>
     </form>
 
-    <p>Il risultato è: @Model</p>
+    @if (Model != null)
+    {
+        <p>Lordo: @Model.Lordo</p>
+        <p>Netto: @Model.Netto</p>
+        <p>Mese Lordo: @Model.MeseLordo</p>
+        <p>Mese Netto: @Model.MeseNetto</p>
+    }
+    else
+    {
+        <p>Non ci sono dati da mostrare.</p>
+    }
+
+    <!--
+
+
+
+
+
+    inserisco il lordo dello <a href="#"></a>
+    restituisco il netto 
+    il netto del costo dell'inprenditore
+    suddivisione 13 o 14 mesilita
+
+    -->
 
 </div>
