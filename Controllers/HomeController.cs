@@ -15,7 +15,15 @@ namespace SaaS.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            CalcoloViewModel calcoloViewModel = new CalcoloViewModel
+            {
+                Lordo = 0,
+                Netto = 0,
+                MeseLordo = 0,
+                MeseNetto = 0
+            };
+
+            return View(calcoloViewModel);
         }
         [HttpPost]
         public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
