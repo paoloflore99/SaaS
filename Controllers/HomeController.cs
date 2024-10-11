@@ -17,6 +17,12 @@ namespace SaaS.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Calcolo([FromForm(Name = "Valore")] int Valore)
+        {
+            int numero = Valore * 2;
+            return View("Index" ,numero);
+        }
 
         public IActionResult Privacy()
         {
