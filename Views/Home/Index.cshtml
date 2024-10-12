@@ -7,6 +7,18 @@
 <div class="container">
     <form asp-controller="Home" asp-action="Calcolo" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
+
+
+        <!--
+
+        tipologia di contratto 
+        tempo indeterminato 
+        tempo determinato 
+        aprendistato
+        collaboratore / aministratore / co. co .co
+        part
+
+        -->
         <div class="mb-3">
             <strong>Nome:</strong>
             <input type="number" name="lordo" value="" />
@@ -16,7 +28,24 @@
             <input type="submit" class="btn btn-small btn-info" value="Salva">
         </div>
     </form>
+    <!--
 
+    agevolazioni contributive 
+    1 nessunio 
+    2 under 30
+    3 donna 
+    4 under 50
+
+
+    -->
+    <!--
+
+    detrazione fiscale 
+    1 nessuna detrazione 
+    2 bonus inpatriati
+    3 bonus inpatriati(con figli)
+
+    -->
     @if (Model != null)
     {
         <p>Lordo: @Model.Lordo</p>
@@ -30,11 +59,6 @@
     }
 
     <!--
-
-
-
-
-
     inserisco il lordo dello <a href="#"></a>
     restituisco il netto 
     il netto del costo dell'inprenditore

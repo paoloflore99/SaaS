@@ -26,7 +26,7 @@ namespace SaaS.Controllers
             return View(calcoloViewModel);
         }
         [HttpPost]
-        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
+        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo )
         {
             decimal netto = lordo * 0.8m;
             decimal mesenetto = 0;
