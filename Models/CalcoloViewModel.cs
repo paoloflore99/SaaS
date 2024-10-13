@@ -6,5 +6,6 @@
         public decimal Netto { get; set; }
         public decimal MeseLordo { get; set; }
         public decimal MeseNetto { get; set; }
+        public decimal 
     }
 }

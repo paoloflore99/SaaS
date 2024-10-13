@@ -33,6 +33,8 @@ namespace SaaS.Controllers
             decimal meselordo = 0;
             meselordo = lordo / 13;
             mesenetto = netto / 13;
+            decimal tasse = lordo * 0.25m;
+            decimal costodatore = lordo * 0.09m;
             CalcoloViewModel calcoloViewModel = new CalcoloViewModel
             {
                 Lordo = lordo,
