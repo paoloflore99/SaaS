@@ -26,14 +26,24 @@ namespace SaaS.Controllers
             return View(calcoloViewModel);
         }
         [HttpPost]
-        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo )
+        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
         {
+            //Contributi Previdenziali e Previdenziali
+            //vanno dal 9.19% al 9,49%
+            decimal Previdenziali_Previdenziali = 9.19m;
+
+            //IRPEF 
+            //Fino a €15.000: 23 %
+            //Da €15.001 a €28.000: 25 %
+            //Da €28.001 a €50.000: 35 %
+            //Oltre €50.000: 43 %
+            decimal Irpef = 0.0m;
+
             decimal netto = lordo * 0.8m;
             decimal mesenetto = 0;
             decimal meselordo = 0;
             meselordo = lordo / 13;
-            mesenetto = netto / 13;
-            
+            mesenetto = netto / 13;    
             decimal costodatore = lordo * 0.30m;
             CalcoloViewModel calcoloViewModel = new CalcoloViewModel
             {
