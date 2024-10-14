@@ -28,36 +28,10 @@ namespace SaaS.Controllers
         [HttpPost]
         public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
         {
-            //Contributi Previdenziali e Previdenziali
-            //vanno dal 9.19% al 9,49%
             decimal Previdenziali_Previdenziali = 9.19m;
-
-
-
-            // Addizionali Regionali e Comunali
-
-            //Addizionale regionale: varia generalmente dallo 0,9% al 3,33%.
-            //Addizionale comunale: generalmente varia dallo 0,1 % allo 0,9 %.
-            //
-            //
-            //
-            //
-            //
-            //
-
-
-
-
-            //Detrazioni Fiscali
-
-
             decimal contributiPrevidenziali = lordo * (Previdenziali_Previdenziali / 100);
             decimal redditoImponibile = lordo - contributiPrevidenziali;
-            //IRPEF 
-            //Fino a €15.000: 23 %
-            //Da €15.001 a €28.000: 25 %
-            //Da €28.001 a €50.000: 35 %
-            //Oltre €50.000: 43 %
+
             decimal Irpef = 0.0m;
             if (redditoImponibile <= 15000)
             {
@@ -71,26 +45,27 @@ namespace SaaS.Controllers
             {
                 Irpef = (15000 * 0.23m) + (13000 * 0.25m) + ((redditoImponibile - 28000) * 0.35m);
             }
-            else 
+            else
             {
                 Irpef = (15000 * 0.23m) + (13000 * 0.25m) + (22000 * 0.35m) + ((redditoImponibile - 50000) * 0.43m);
             }
 
+            decimal addizionaleRegionale = redditoImponibile * 0.02m; //2%
+            decimal addizionaleComunale = redditoImponibile * 0.005m; //0.5%
+            decimal totaleAddizionali = addizionaleRegionale + addizionaleComunale;
 
-            decimal netto = lordo - Irpef;
-            decimal mesenetto = 0;
-            decimal meselordo = 0;
-            meselordo = lordo / 13;
-            mesenetto = netto / 13;    
+            decimal netto = lordo - contributiPrevidenziali - Irpef - totaleAddizionali;
+            decimal meselordo = lordo / 12;
+            decimal mesenetto = netto / 12;
             decimal costodatore = lordo * 0.30m;
+
             CalcoloViewModel calcoloViewModel = new CalcoloViewModel
             {
                 Lordo = lordo,
-                Netto = netto ,
+                Netto = netto,
                 MeseLordo = meselordo,
                 MeseNetto = mesenetto
             };
-            
             return View("Index" , calcoloViewModel);
         }
 
