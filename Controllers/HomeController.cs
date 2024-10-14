@@ -32,37 +32,52 @@ namespace SaaS.Controllers
             //vanno dal 9.19% al 9,49%
             decimal Previdenziali_Previdenziali = 9.19m;
 
+
+
+            // Addizionali Regionali e Comunali
+
+            //Addizionale regionale: varia generalmente dallo 0,9% al 3,33%.
+            //Addizionale comunale: generalmente varia dallo 0,1 % allo 0,9 %.
+            //
+            //
+            //
+            //
+            //
+            //
+
+
+
+
+            //Detrazioni Fiscali
+
+
+            decimal contributiPrevidenziali = lordo * (Previdenziali_Previdenziali / 100);
+            decimal redditoImponibile = lordo - contributiPrevidenziali;
             //IRPEF 
             //Fino a €15.000: 23 %
             //Da €15.001 a €28.000: 25 %
             //Da €28.001 a €50.000: 35 %
             //Oltre €50.000: 43 %
             decimal Irpef = 0.0m;
-
-            if (lordo <= 15000)
+            if (redditoImponibile <= 15000)
             {
-                Irpef = lordo * 0.23m;
+                Irpef = redditoImponibile * 0.23m;
             }
-            else if (lordo > 15000 && lordo <= 28000)
+            else if (redditoImponibile > 15000 && redditoImponibile <= 28000)
             {
-                Irpef = (15000 * 0.23m) + ((lordo - 15000) * 0.25m);
+                Irpef = (15000 * 0.23m) + ((redditoImponibile - 15000) * 0.25m);
             }
-            else if (lordo > 28000 && lordo <= 50000)
+            else if (redditoImponibile > 28000 && redditoImponibile <= 50000)
             {
-                Irpef = (15000 * 0.23m) + (13000 * 0.25m) + ((lordo - 28000) * 0.35m);
+                Irpef = (15000 * 0.23m) + (13000 * 0.25m) + ((redditoImponibile - 28000) * 0.35m);
             }
             else 
             {
-                Irpef = (15000 * 0.23m) + (13000 * 0.25m) + (22000 * 0.35m) + ((lordo - 50000) * 0.43m);
+                Irpef = (15000 * 0.23m) + (13000 * 0.25m) + (22000 * 0.35m) + ((redditoImponibile - 50000) * 0.43m);
             }
 
-            // Addizionali Regionali e Comunali
 
-            //Addizionale regionale: varia generalmente dallo 0,9% al 3,33%.
-            //Addizionale comunale: generalmente varia dallo 0,1 % allo 0,9 %.
-
-
-            decimal netto = lordo * 0.8m;
+            decimal netto = lordo - Irpef;
             decimal mesenetto = 0;
             decimal meselordo = 0;
             meselordo = lordo / 13;
