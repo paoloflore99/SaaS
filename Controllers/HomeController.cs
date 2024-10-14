@@ -68,6 +68,7 @@ namespace SaaS.Controllers
             };
             return View("Index" , calcoloViewModel);
         }
+         
 
         public IActionResult Privacy()
         {
