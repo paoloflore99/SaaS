@@ -55,16 +55,16 @@ namespace SaaS.Controllers
             decimal totaleAddizionali = addizionaleRegionale + addizionaleComunale;
 
             decimal netto = lordo - contributiPrevidenziali - Irpef - totaleAddizionali;
-            decimal meselordo = lordo / 12;
-            decimal mesenetto = netto / 12;
-            decimal costodatore = lordo * 0.30m;
+            decimal meselordo = Math.Round(lordo / 12, 2);
+            decimal mesenetto = Math.Round(netto / 12, 2);
+            decimal costodatore = Math.Round(lordo * 0.30m, 2);
 
             CalcoloViewModel calcoloViewModel = new CalcoloViewModel
             {
-                Lordo = lordo,
-                Netto = netto,
+                Lordo = Math.Round(lordo,2),
+                Netto = Math.Round(netto,2),
                 MeseLordo = meselordo,
-                MeseNetto = mesenetto
+                MeseNetto = mesenetto ,
             };
             return View("Index" , calcoloViewModel);
         }
