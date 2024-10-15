@@ -57,6 +57,10 @@ namespace SaaS.Controllers
             decimal netto = lordo - contributiPrevidenziali - Irpef - totaleAddizionali;
             decimal meselordo = Math.Round(lordo / 12, 2);
             decimal mesenetto = Math.Round(netto / 12, 2);
+            decimal meselordo13 = Math.Round(lordo / 13, 2);
+            decimal mesenetto13 = Math.Round(netto / 13, 2);
+            decimal meselordo14 = Math.Round(lordo / 14, 2);
+            decimal mesenetto14 = Math.Round(netto / 14, 2);
             decimal costodatore = Math.Round(lordo * 0.30m, 2);
 
             CalcoloViewModel calcoloViewModel = new CalcoloViewModel
