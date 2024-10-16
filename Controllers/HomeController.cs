@@ -26,7 +26,11 @@ namespace SaaS.Controllers
             return View(calcoloViewModel);
         }
         [HttpPost]
-        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo ,[FromForm(Name = "contratto")] int contratto)
+        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo, 
+            [FromForm(Name = "contratto")] int contratto,
+            [FromForm(Name = "agevolazione")] int agevolazione,
+            [FromForm(Name = "detrazione")]int detrazione)
+             
         {
             decimal percentualePrevidenziale = 0.0m;
             switch (contratto)
@@ -48,7 +52,7 @@ namespace SaaS.Controllers
                     break;
             }
             decimal agevolazionePercentuale = 0m;
-            switch (agevolazionePercentuale)
+            switch (agevolazione)
             {
                 case 1:
                     agevolazionePercentuale = 0.2m;
@@ -61,8 +65,10 @@ namespace SaaS.Controllers
                     break;
                 default:
                     agevolazionePercentuale = 0m;
-                    break ;
+                    break;
             }
+
+
 
             decimal contributiPrevidenziali = lordo * ((percentualePrevidenziale - agevolazionePercentuale) / 100);
             decimal redditoImponibile = lordo - contributiPrevidenziali;
@@ -84,7 +90,21 @@ namespace SaaS.Controllers
             {
                 Irpef = (15000 * 0.23m) + (13000 * 0.25m) + (22000 * 0.35m) + ((redditoImponibile - 50000) * 0.43m);
             }
+            decimal detrazionefiscale = 0.0m;
+            switch (detrazione)
+            {
+                case 1:
+                    detrazionefiscale = Irpef * 0.30m;
+                    break;
+                case 2:
+                    detrazionefiscale = Irpef * 0.50m;
+                    break;
+                default:
+                    detrazionefiscale = 0.0m;
+                    break;
+            }
 
+            Irpef -= detrazionefiscale;
             decimal addizionaleRegionale = redditoImponibile * 0.02m; //2%
             decimal addizionaleComunale = redditoImponibile * 0.005m; //0.5%
             decimal totaleAddizionali = addizionaleRegionale + addizionaleComunale;

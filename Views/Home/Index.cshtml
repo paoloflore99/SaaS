@@ -24,23 +24,25 @@
         <div class="text-end">
             <input type="submit" class="btn btn-small btn-info" value="Salva">
         </div>
+
+        <label for="agevolazione">agevolazione contributiva:</label>
+        <select id="agevolazione" name="agevolazione">
+            <option value="1">Nessuna agevolazione</option>
+            <option value="2">Under 30</option>
+            <option value="3">Donna</option>
+            <option value="4">Under 50</option>
+        </select>
+
+        <label for="detrazione">detrazione fiscale:</label>
+        <select id="detrazione" name="detrazione">
+            <option value="1">Nessuna detrazione</option>
+            <option value="2">bonus inpatriati</option>
+            <option value="3">bonus inpatriati(con figli)</option>
+        </select>
     </form>
 
 
-    <label for="agevolazione">agevolazione contributiva:</label>
-    <select id="agevolazione" name="agevolazione">
-        <option value="1">Nessuna agevolazione</option>
-        <option value="2">Under 30</option>
-        <option value="3">Donna</option>
-        <option value="4">Under 50</option>
-    </select>
 
-    <label for="detrazione">detrazione fiscale:</label>
-    <select id="detrazione" name="detrazionee">
-        <option value="nessuna">Nessuna detrazione</option>
-        <option value="under30">bonus inpatriati</option>
-        <option value="donna">bonus inpatriati(con figli)</option>
-    </select>
 
     @if (Model != null)
     {
