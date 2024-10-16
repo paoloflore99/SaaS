@@ -19,6 +19,13 @@
         part
 
         -->
+        <label for="contratto ">tipologia di contratto :</label>
+        <select id="contratto " name="contratto ">
+            <option value="nessuna">tempo indeterminato </option>
+            <option value="under30">tempo determinato</option>
+            <option value="donna">aprendistato</option>
+            <option value="under50">collaboratore / aministratore / co. co .co</option>
+        </select>
         <div class="mb-3">
             <strong>Nome:</strong>
             <input type="number" name="lordo" value="" />
@@ -28,14 +35,7 @@
             <input type="submit" class="btn btn-small btn-info" value="Salva">
         </div>
     </form>
-    <!--
 
-    agevolazioni contributive 
-    1 nessunio 
-    2 under 30
-    3 donna 
-    4 under 50
-    -->
 
     <label for="agevolazione">Seleziona un'agevolazione contributiva:</label>
     <select id="agevolazione" name="agevolazione">
@@ -45,25 +45,13 @@
         <option value="under50">Under 50</option>
     </select>
 
-    <!--
-
-    detrazione fiscale 
-    1 nessuna detrazione 
-    2 bonus inpatriati
-    3 bonus inpatriati(con figli)
-
-    -->
-    <label for="agevolazione">detrazione fiscale:</label>
-    <select id="agevolazione" name="agevolazione">
+    <label for="detrazione">detrazione fiscale:</label>
+    <select id="detrazione" name="detrazionee">
         <option value="nessuna">Nessuna</option>
         <option value="under30">bonus inpatriati</option>
         <option value="donna">bonus inpatriati(con figli)</option>
-
     </select>
-    <!--
 
-    numero delle mensilita 12 13 14 
-    -->
     @if (Model != null)
     {
         <p>Lordo: @Model.Lordo</p>
@@ -80,12 +68,6 @@
         <p>Non ci sono dati da mostrare.</p>
     }
 
-    <!--
-    inserisco il lordo dello
-    restituisco il netto 
-    il netto del costo dell'inprenditore
-    suddivisione 13 o 14 mesilita
 
-    -->
 
 </div>
