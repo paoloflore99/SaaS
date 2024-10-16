@@ -1,66 +1,116 @@
 ﻿@model CalcoloViewModel
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Calcolatore Stipendio</h1>
+    <p>Inserisci i dettagli per calcolare il costo aziendale e lo stipendio netto.</p>
 </div>
 
 <div class="container">
     <form asp-controller="Home" asp-action="Calcolo" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
 
-        <label for="contratto ">tipologia di contratto :</label>
-        <select id="contratto " name="contratto">
-            <option value="indeterminato">tempo indeterminato </option>
-            <option value="determinato">tempo determinato</option>
-            <option value="aprendistato">aprendistato</option>
-            <option value="aministratore">collaboratore / aministratore / co. co .co</option>
-        </select>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h3>Inserisci i Dati</h3>
 
-        <div class="mb-3">
-            <strong>RAL</strong>
-            <input type="number" name="lordo" value="" />
+                    <label for="contratto">Tipologia di contratto:</label>
+                    <select id="contratto" name="contratto" class="form-select">
+                        <option value="indeterminato">Tempo indeterminato</option>
+                        <option value="determinato">Tempo determinato</option>
+                        <option value="aprendistato">Apprendistato</option>
+                        <option value="aministratore">Collaboratore / Amministratore</option>
+                    </select>
+
+                    <div class="mb-3">
+                        <strong>RAL (€)</strong>
+                        <input type="number" name="lordo" class="form-control" required />
+                    </div>
+
+                    <label for="agevolazione">Agevolazione contributiva:</label>
+                    <select id="agevolazione" name="agevolazione" class="form-select">
+                        <option value="Nessunaagevolazione">Nessuna agevolazione</option>
+                        <option value="Under30">Under 30</option>
+                        <option value="donna">Donna</option>
+                        <option value="Under50">Under 50</option>
+                    </select>
+
+                    <label for="detrazione">Detrazione fiscale:</label>
+                    <select id="detrazione" name="detrazione" class="form-select">
+                        <option value="Nessunadetrazione">Nessuna detrazione</option>
+                        <option value="inpatriati">Bonus inpatriati</option>
+                        <option value="inpatriati(con figli)">Bonus inpatriati (con figli)</option>
+                    </select>
+
+                    <div class="text-end mt-3">
+                        <input type="submit" class="btn btn-small btn-info" value="Calcola">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h3>Risultati</h3>
+                    @if (Model != null)
+                    {
+                        <p><strong>Costo Totale per l'Azienda:</strong> €@Model.CostoTotale</p>
+                        <p><strong>Lordo:</strong> €@Model.Lordo</p>
+                        <p><strong>Netto:</strong> €@Model.Netto</p>
+
+                        <div class="mb-3">
+                            <label for="periodo">Seleziona il periodo:</label>
+                            <select id="periodo" name="periodo" class="form-select" onchange="toggleMensileOptions(this.value)">
+                                <option value="annuale">Annuale</option>
+                                <option value="mensile">Mensile</option>
+                            </select>
+                        </div>
+
+                        <div id="mensileOptions" style="display:none;">
+                            <label for="mensilita">Seleziona le mensilità:</label>
+                            <select id="mensilita" name="mensilita" class="form-select" onchange="updateResults()">
+                                <option value="12">12 Mensilità</option>
+                                <option value="13">13 Mensilità</option>
+                                <option value="14">14 Mensilità</option>
+                            </select>
+                        </div>
+
+                        <!-- Risultati Dinamici -->
+                        <div id="risultatiMensili" style="margin-top: 20px;">
+                            <div id="risultatoMensile12" style="display: block;">
+                                <p><strong>Mese Lordo:</strong> €@Model.MeseLordo</p>
+                                <p><strong>Mese Netto:</strong> €@Model.MeseNetto</p>
+                            </div>
+                            <div id="risultatoMensile13" style="display: none;">
+                                <p><strong>Mese Lordo 13:</strong> €@Model.MeseLordo13</p>
+                                <p><strong>Mese Netto 13:</strong> €@Model.MeseNetto13</p>
+                            </div>
+                            <div id="risultatoMensile14" style="display: none;">
+                                <p><strong>Mese Lordo 14:</strong> €@Model.MeseLordo14</p>
+                                <p><strong>Mese Netto 14:</strong> €@Model.MeseNetto14</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Non ci sono dati da mostrare.</p>
+                    }
+                </div>
+            </div>
         </div>
-
-        <div class="text-end">
-            <input type="submit" class="btn btn-small btn-info" value="Salva">
-        </div>
-
-        <label for="agevolazione">agevolazione contributiva:</label>
-        <select id="agevolazione" name="agevolazione">
-            <option value="Nessunaagevolazione">Nessuna agevolazione</option>
-            <option value="Under30">Under 30</option>
-            <option value="donna">Donna</option>
-            <option value="Under50">Under 50</option>
-        </select>
-
-        <label for="detrazione">detrazione fiscale:</label>
-        <select id="detrazione" name="detrazione">
-            <option value="Nessunadetrazione">Nessuna detrazione</option>
-            <option value="inpatriati">bonus inpatriati</option>
-            <option value="inpatriati(con figli)">bonus inpatriati(con figli)</option>
-        </select>
     </form>
-
-
-
-
-    @if (Model != null)
-    {
-        <p>Costo Totale per l'Azienda: @Model.CostoTotale</p>
-        <p>Lordo: @Model.Lordo</p>
-        <p>Netto: @Model.Netto</p>
-        <p>Mese Lordo 12: @Model.MeseLordo</p>
-        <p>Mese Netto 12: @Model.MeseNetto</p>
-        <p>Mese Lordo 13: @Model.MeseLordo13</p>
-        <p>Mese Netto 13: @Model.MeseNetto13</p>
-        <p>Mese Lordo 14: @Model.MeseLordo14</p>
-        <p>Mese Netto 14: @Model.MeseNetto14</p>
-    }
-    else
-    {
-        <p>Non ci sono dati da mostrare.</p>
-    }
-
-
-
 </div>
+
+<script>
+    function toggleMensileOptions(periodo) {
+        var mensileOptions = document.getElementById("mensileOptions");
+        mensileOptions.style.display = periodo === "mensile" ? "block" : "none";
+        updateResults(); // Aggiorna i risultati quando il periodo cambia
+    }
+
+    function updateResults() {
+        var mensilita = document.getElementById("mensilita").value;
+        document.getElementById("risultatoMensile12").style.display = mensilita === "12" ? "block" : "none";
+        document.getElementById("risultatoMensile13").style.display = mensilita === "13" ? "block" : "none";
+        document.getElementById("risultatoMensile14").style.display = mensilita === "14" ? "block" : "none";
+    }
+</script>
