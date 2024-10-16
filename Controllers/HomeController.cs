@@ -27,24 +27,24 @@ namespace SaaS.Controllers
         }
         [HttpPost]
         public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo, 
-            [FromForm(Name = "contratto")] int contratto,
-            [FromForm(Name = "agevolazione")] int agevolazione,
-            [FromForm(Name = "detrazione")]int detrazione)
+            [FromForm(Name = "contratto")] string contratto,
+            [FromForm(Name = "agevolazione")] string agevolazione,
+            [FromForm(Name = "detrazione")] string detrazione)
              
         {
             decimal percentualePrevidenziale = 0.0m;
             switch (contratto)
             {
-                case 1:
+                case "indeterminato":
                     percentualePrevidenziale = 9.19m;
                     break;
-                case 2:
+                case "determinato":
                     percentualePrevidenziale = 10.59m;
                     break;
-                case 3:
+                case "aprendistato":
                     percentualePrevidenziale = 5.0m;
                     break;
-                case 4:
+                case "aministratore":
                     percentualePrevidenziale = 17.0m;
                     break;
                 default:
@@ -54,14 +54,17 @@ namespace SaaS.Controllers
             decimal agevolazionePercentuale = 0m;
             switch (agevolazione)
             {
-                case 1:
+                case "Nessunaagevolazione":
                     agevolazionePercentuale = 0.2m;
                     break;
-                case 2:
+                case "Under30":
                     agevolazionePercentuale = 0.1m;
                     break;
-                case 3:
+                case "donna":
                     agevolazionePercentuale = 0.15m;
+                    break;
+                case "Under50":
+                    agevolazionePercentuale = 0.05m;
                     break;
                 default:
                     agevolazionePercentuale = 0m;
@@ -93,10 +96,13 @@ namespace SaaS.Controllers
             decimal detrazionefiscale = 0.0m;
             switch (detrazione)
             {
-                case 1:
+                case "Nessunadetrazione":
+                    detrazionefiscale = 0.0m;
+                    break;
+                case "inpatriati":
                     detrazionefiscale = Irpef * 0.30m;
                     break;
-                case 2:
+                case "inpatriati(con figli)":
                     detrazionefiscale = Irpef * 0.50m;
                     break;
                 default:
@@ -105,10 +111,12 @@ namespace SaaS.Controllers
             }
 
             Irpef -= detrazionefiscale;
+            decimal percentualeContributiAziendale = 0.30m;
+            decimal contributiAziendali = lordo * percentualeContributiAziendale;
+            decimal costoTotale = lordo + contributiAziendali;
             decimal addizionaleRegionale = redditoImponibile * 0.02m; //2%
             decimal addizionaleComunale = redditoImponibile * 0.005m; //0.5%
             decimal totaleAddizionali = addizionaleRegionale + addizionaleComunale;
-
             decimal netto = lordo - contributiPrevidenziali - Irpef - totaleAddizionali;
             decimal meselordo = Math.Round(lordo / 12, 2);
             decimal mesenetto = Math.Round(netto / 12, 2);
@@ -128,6 +136,7 @@ namespace SaaS.Controllers
                 MeseNetto13 = mesenetto13,
                 MeseLordo14 = meselordo14,
                 MeseNetto14 = mesenetto14,
+                CostoTotale = Math.Round(costoTotale, 2)
             };
             return View("Index" , calcoloViewModel);
         }

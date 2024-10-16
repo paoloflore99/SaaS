@@ -10,6 +10,7 @@
         public decimal MeseNetto13 { get; set; }
         public decimal MeseLordo14 { get; set; }
         public decimal MeseNetto14 { get; set; }
+        public decimal CostoTotale { get; set; }
 
     }
 }

@@ -10,10 +10,10 @@
 
         <label for="contratto ">tipologia di contratto :</label>
         <select id="contratto " name="contratto">
-            <option value="1">tempo indeterminato </option>
-            <option value="2">tempo determinato</option>
-            <option value="3">aprendistato</option>
-            <option value="4">collaboratore / aministratore / co. co .co</option>
+            <option value="indeterminato">tempo indeterminato </option>
+            <option value="determinato">tempo determinato</option>
+            <option value="aprendistato">aprendistato</option>
+            <option value="aministratore">collaboratore / aministratore / co. co .co</option>
         </select>
 
         <div class="mb-3">
@@ -27,17 +27,17 @@
 
         <label for="agevolazione">agevolazione contributiva:</label>
         <select id="agevolazione" name="agevolazione">
-            <option value="1">Nessuna agevolazione</option>
-            <option value="2">Under 30</option>
-            <option value="3">Donna</option>
-            <option value="4">Under 50</option>
+            <option value="Nessunaagevolazione">Nessuna agevolazione</option>
+            <option value="Under30">Under 30</option>
+            <option value="donna">Donna</option>
+            <option value="Under50">Under 50</option>
         </select>
 
         <label for="detrazione">detrazione fiscale:</label>
         <select id="detrazione" name="detrazione">
-            <option value="1">Nessuna detrazione</option>
-            <option value="2">bonus inpatriati</option>
-            <option value="3">bonus inpatriati(con figli)</option>
+            <option value="Nessunadetrazione">Nessuna detrazione</option>
+            <option value="inpatriati">bonus inpatriati</option>
+            <option value="inpatriati(con figli)">bonus inpatriati(con figli)</option>
         </select>
     </form>
 
@@ -46,6 +46,7 @@
 
     @if (Model != null)
     {
+        <p>Costo Totale per l'Azienda: @Model.CostoTotale</p>
         <p>Lordo: @Model.Lordo</p>
         <p>Netto: @Model.Netto</p>
         <p>Mese Lordo 12: @Model.MeseLordo</p>
