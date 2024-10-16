@@ -35,9 +35,16 @@
     2 under 30
     3 donna 
     4 under 50
-
-
     -->
+
+    <label for="agevolazione">Seleziona un'agevolazione contributiva:</label>
+    <select id="agevolazione" name="agevolazione">
+        <option value="nessuna">Nessuna</option>
+        <option value="under30">Under 30</option>
+        <option value="donna">Donna</option>
+        <option value="under50">Under 50</option>
+    </select>
+
     <!--
 
     detrazione fiscale 
@@ -46,7 +53,13 @@
     3 bonus inpatriati(con figli)
 
     -->
+    <label for="agevolazione">detrazione fiscale:</label>
+    <select id="agevolazione" name="agevolazione">
+        <option value="nessuna">Nessuna</option>
+        <option value="under30">bonus inpatriati</option>
+        <option value="donna">bonus inpatriati(con figli)</option>
 
+    </select>
     <!--
 
     numero delle mensilita 12 13 14 
@@ -55,8 +68,12 @@
     {
         <p>Lordo: @Model.Lordo</p>
         <p>Netto: @Model.Netto</p>
-        <p>Mese Lordo: @Model.MeseLordo</p>
-        <p>Mese Netto: @Model.MeseNetto</p>
+        <p>Mese Lordo 12: @Model.MeseLordo</p>
+        <p>Mese Netto 12: @Model.MeseNetto</p>
+        <p>Mese Lordo 13: @Model.MeseLordo13</p>
+        <p>Mese Netto 13: @Model.MeseNetto13</p>
+        <p>Mese Lordo 14: @Model.MeseLordo14</p>
+        <p>Mese Netto 14: @Model.MeseNetto14</p>
     }
     else
     {
@@ -64,7 +81,7 @@
     }
 
     <!--
-    inserisco il lordo dello <a href="#"></a>
+    inserisco il lordo dello
     restituisco il netto 
     il netto del costo dell'inprenditore
     suddivisione 13 o 14 mesilita

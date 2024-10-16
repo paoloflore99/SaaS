@@ -73,7 +73,6 @@ namespace SaaS.Controllers
                 MeseNetto13 = mesenetto13,
                 MeseLordo14 = meselordo14,
                 MeseNetto14 = mesenetto14,
-
             };
             return View("Index" , calcoloViewModel);
         }
