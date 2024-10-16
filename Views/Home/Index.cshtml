@@ -8,26 +8,16 @@
     <form asp-controller="Home" asp-action="Calcolo" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
 
-
-        <!--
-
-        tipologia di contratto 
-        tempo indeterminato 
-        tempo determinato 
-        aprendistato
-        collaboratore / aministratore / co. co .co
-        part
-
-        -->
         <label for="contratto ">tipologia di contratto :</label>
-        <select id="contratto " name="contratto ">
+        <select id="contratto " name="contratto">
             <option value="nessuna">tempo indeterminato </option>
             <option value="under30">tempo determinato</option>
             <option value="donna">aprendistato</option>
             <option value="under50">collaboratore / aministratore / co. co .co</option>
         </select>
+
         <div class="mb-3">
-            <strong>Nome:</strong>
+            <strong>RAL</strong>
             <input type="number" name="lordo" value="" />
         </div>
 
@@ -37,9 +27,9 @@
     </form>
 
 
-    <label for="agevolazione">Seleziona un'agevolazione contributiva:</label>
+    <label for="agevolazione">agevolazione contributiva:</label>
     <select id="agevolazione" name="agevolazione">
-        <option value="nessuna">Nessuna</option>
+        <option value="nessuna">Nessuna agevolazione</option>
         <option value="under30">Under 30</option>
         <option value="donna">Donna</option>
         <option value="under50">Under 50</option>
@@ -47,7 +37,7 @@
 
     <label for="detrazione">detrazione fiscale:</label>
     <select id="detrazione" name="detrazionee">
-        <option value="nessuna">Nessuna</option>
+        <option value="nessuna">Nessuna detrazione</option>
         <option value="under30">bonus inpatriati</option>
         <option value="donna">bonus inpatriati(con figli)</option>
     </select>

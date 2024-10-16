@@ -26,10 +26,30 @@ namespace SaaS.Controllers
             return View(calcoloViewModel);
         }
         [HttpPost]
-        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo)
+        public IActionResult Calcolo([FromForm(Name = "lordo")] decimal lordo ,[FromForm(Name = "contratto")] int contratto)
         {
-            decimal Previdenziali_Previdenziali = 9.19m;
-            decimal contributiPrevidenziali = lordo * (Previdenziali_Previdenziali / 100);
+            decimal percentualePrevidenziale = 0.0m;
+            switch (contratto)
+            {
+                case 1:
+                    percentualePrevidenziale = 9.19m;
+                    break;
+                case 2:
+                    percentualePrevidenziale = 10.59m;
+                    break;
+                case 3:
+                    percentualePrevidenziale = 5.0m;
+                    break;
+                case 4:
+                    percentualePrevidenziale = 17.0m;
+                    break;
+                default:
+                    percentualePrevidenziale = 9.19m;
+                    break ;
+            }
+
+
+            decimal contributiPrevidenziali = lordo * (percentualePrevidenziale / 100);
             decimal redditoImponibile = lordo - contributiPrevidenziali;
 
             decimal Irpef = 0.0m;
