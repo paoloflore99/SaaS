@@ -45,11 +45,26 @@ namespace SaaS.Controllers
                     break;
                 default:
                     percentualePrevidenziale = 9.19m;
+                    break;
+            }
+            decimal agevolazionePercentuale = 0m;
+            switch (agevolazionePercentuale)
+            {
+                case 1:
+                    agevolazionePercentuale = 0.2m;
+                    break;
+                case 2:
+                    agevolazionePercentuale = 0.1m;
+                    break;
+                case 3:
+                    agevolazionePercentuale = 0.15m;
+                    break;
+                default:
+                    agevolazionePercentuale = 0m;
                     break ;
             }
 
-
-            decimal contributiPrevidenziali = lordo * (percentualePrevidenziale / 100);
+            decimal contributiPrevidenziali = lordo * ((percentualePrevidenziale - agevolazionePercentuale) / 100);
             decimal redditoImponibile = lordo - contributiPrevidenziali;
 
             decimal Irpef = 0.0m;
