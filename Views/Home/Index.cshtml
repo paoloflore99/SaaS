@@ -12,55 +12,58 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="card p-3 uniform-card">
-                    <label for="contratto"><strong>Tipologia di contratto</strong></label>
-                    <select id="contratto" name="contratto" class="form-select">
-                        <option value="indeterminato">Tempo indeterminato</option>
-                        <option value="determinato">Tempo determinato</option>
-                        <option value="aprendistato">Apprendistato</option>
-                        <option value="aministratore">Collaboratore / Amministratore</option>
-                    </select>
+                    <div class="mt-3">
+                        <label for="contratto"><strong>Tipologia di contratto</strong></label>
+                        <select id="contratto" name="contratto" class="form-select">
+                            <option value="indeterminato">Tempo indeterminato</option>
+                            <option value="determinato">Tempo determinato</option>
+                            <option value="aprendistato">Apprendistato</option>
+                            <option value="aministratore">Collaboratore / Amministratore</option>
+                        </select>
+                    </div>
 
-                    <div class="mb-3">
-                        <strong>RAL (€)</strong>
+
+                    <div class="mb-3 mt-3">
+                        <strong>RAL</strong>
                         <input type="number" name="lordo" class="form-control" required />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 mt-3">
                         <strong>Agevolazione contributiva</strong><br />
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="agevolazione" value="Nessunaagevolazione" checked>
-                            <label class="form-check-label">Nessuna</label>
+                            <label class="form-check-label"><strong>Nessuna</strong></label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="agevolazione" value="Under30">
-                            <label class="form-check-label">Under 30</label>
+                            <label class="form-check-label"><strong>Under 30</strong></label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="agevolazione" value="donna">
-                            <label class="form-check-label">Donna</label>
+                            <label class="form-check-label"><strong>Donna</strong></label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="agevolazione" value="Under50">
-                            <label class="form-check-label">Under 50</label>
+                            <label class="form-check-label"><strong>Under 50</strong></label>
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 mt-3">
                         <strong>Detrazione fiscale</strong><br />
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="detrazione" value="Nessunadetrazione" checked>
-                            <label class="form-check-label">Nessuna</label>
+                            <label class="form-check-label"><strong>Nessuna</strong></label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="detrazione" value="inpatriati">
-                            <label class="form-check-label">Bonus inpatriati</label>
+                            <label class="form-check-label"><strong>Bonus inpatriati</strong></label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="detrazione" value="inpatriati(con figli)">
-                            <label class="form-check-label">Bonus inpatriati (con figli)</label>
+                            <label class="form-check-label"><strong>Bonus inpatriati (con figli)</strong></label>
                         </div>
                     </div>
-
+                    <hr />
                     <div class="text-end mt-3">
                         <input type="submit" class="btn btn-dark w-100" value="Calcola">
                     </div>
@@ -75,41 +78,50 @@
                     @if (Model != null)
                     {
                         <div class="mb-3">
-                            <label><strong>Seleziona il periodo:</strong></label>
                             <div class="btn-group w-100" role="group">
-                                <button type="button" id="annualeBtn" class="btn btn-primary" onclick="toggleMensileOptions('annuale')">Annuale</button>
-                                <button type="button" id="mensileBtn" class="btn btn-outline-primary" onclick="toggleMensileOptions('mensile')">Mensile</button>
+                                <button type="button" id="annualeBtn" class="btn btn-dark" onclick="toggleMensileOptions('annuale')">Annuale</button>
+                                <button type="button" id="mensileBtn" class="btn btn-light" onclick="toggleMensileOptions('mensile')">Mensile</button>
                             </div>
                         </div>
+
 
                         <div id="mensileOptions" style="display:none; margin-top: 15px;">
                             <label for="mensilita"><strong>Seleziona le mensilità:</strong></label>
                             <div class="btn-group w-100" role="group">
-                                <button type="button" class="btn btn-outline-primary" value="12" onclick="updateResults(this.value)">12 Mensilità</button>
-                                <button type="button" class="btn btn-outline-primary" value="13" onclick="updateResults(this.value)">13 Mensilità</button>
-                                <button type="button" class="btn btn-outline-primary" value="14" onclick="updateResults(this.value)">14 Mensilità</button>
+                                <button type="button" class="btn btn-outline-secondary" value="12" onclick="updateResults(this.value)">12 Mensilità</button>
+                                <button type="button" class="btn btn-outline-secondary" value="13" onclick="updateResults(this.value)">13 Mensilità</button>
+                                <button type="button" class="btn btn-outline-secondary" value="14" onclick="updateResults(this.value)">14 Mensilità</button>
                             </div>
                         </div>
 
                         <div id="risultatiAnnuali">
-                            <p><strong>Costo Azienda</strong> €@Model.CostoTotale</p>
-                            <p><strong>Stipendio lordo</strong> €@Model.Lordo</p>
-                            <p><strong>Stipendio netto</strong> €@Model.Netto</p>
+                            <p><strong>Costo Azienda</strong><h3>€@Model.CostoTotale</h3> </p>
+                            <hr />
+                            <p><strong>Stipendio lordo</strong><h3>€@Model.Lordo</h3> </p>
+                            <hr />
+                            <p><strong>Stipendio netto</strong><h3>€@Model.Netto</h3></p>
+                            <hr />
                         </div>
 
                         <!-- Visualizzazione Mensile -->
                         <div id="risultatiMensili" style="display:none; margin-top: 20px;">
                             <div id="risultatoMensile12" style="display: none;">
-                                <p><strong>Mese Lordo:</strong> €@Model.MeseLordo</p>
-                                <p><strong>Mese Netto:</strong> €@Model.MeseNetto</p>
+                                <p><strong>Stipendio lordo</strong><h3>€@Model.MeseLordo</h3> </p>
+                                <hr />
+                                <p><strong>Stipendio netto</strong><h3>€@Model.MeseNetto</h3> </p>
+                                <hr />
                             </div>
                             <div id="risultatoMensile13" style="display: none;">
-                                <p><strong>Mese Lordo 13:</strong> €@Model.MeseLordo13</p>
-                                <p><strong>Mese Netto 13:</strong> €@Model.MeseNetto13</p>
+                                <p><strong>Stipendio lordo</strong><h3>€@Model.MeseLordo13</h3> </p>
+                                <hr />
+                                <p><strong>Stipendio netto</strong><h3>€@Model.MeseNetto13</h3> </p>
+                                <hr />
                             </div>
                             <div id="risultatoMensile14" style="display: none;">
-                                <p><strong>Mese Lordo 14:</strong> €@Model.MeseLordo14</p>
-                                <p><strong>Mese Netto 14:</strong> €@Model.MeseNetto14</p>
+                                <p><strong>Stipendio lordo</strong><h3>€@Model.MeseLordo14</h3> </p>
+                                <hr />
+                                <p><strong>Stipendio netto</strong><h3> €@Model.MeseNetto14</h3></p>
+                                <hr />
                             </div>
                         </div>
                     }
@@ -133,10 +145,12 @@
 
         if (periodo === "mensile") {
             mensileOptions.style.display = "block";
-            mensileBtn.classList.add("btn-primary");
-            mensileBtn.classList.remove("btn-outline-primary");
-            annualeBtn.classList.remove("btn-primary");
-            annualeBtn.classList.add("btn-outline-primary");
+            mensileBtn.classList.remove("btn-light"); // Rimuovi la classe di stile "light"
+            mensileBtn.classList.add("btn-dark"); // Aggiungi la classe di stile "dark"
+
+            annualeBtn.classList.remove("btn-dark"); // Rimuovi la classe di stile "dark" dal bottone annuale
+            annualeBtn.classList.add("btn-light"); // Aggiungi la classe di stile "light" al bottone annuale
+
             risultatiAnnuali.style.display = "none";
             risultatiMensili.style.display = "block";
 
@@ -147,14 +161,19 @@
             updateResults("12");
         } else {
             mensileOptions.style.display = "none";
-            annualeBtn.classList.add("btn-primary");
-            annualeBtn.classList.remove("btn-outline-primary");
-            mensileBtn.classList.remove("btn-primary");
-            mensileBtn.classList.add("btn-outline-primary");
+            annualeBtn.classList.remove("btn-light"); // Rimuovi la classe di stile "light"
+            annualeBtn.classList.add("btn-dark"); // Aggiungi la classe di stile "dark"
+
+            mensileBtn.classList.remove("btn-dark"); // Rimuovi la classe di stile "dark" dal bottone mensile
+            mensileBtn.classList.add("btn-light"); // Aggiungi la classe di stile "light" al bottone mensile
+
             risultatiAnnuali.style.display = "block";
             risultatiMensili.style.display = "none";
         }
     }
+
+
+
 
     function updateResults(mensilita) {
         // Logica per calcolare i risultati in base alla mensilità selezionata
@@ -169,15 +188,37 @@
         risultatoMensile14.style.display = mensilita === "14" ? "block" : "none";
     }
 </script>
-
-
 <style>
+    input[type="radio"].form-check-input:checked + .form-check-label:before {
+        background-color: black; /* Colore di sfondo nero quando selezionato */
+        border: 2px solid black; /* Colore del bordo */
+    }
+    .btn:focus {
+        outline: none;
+        box-shadow: none; 
+    }
     .uniform-card {
         min-height: 100%; /* Uniform height for both cards */
     }
 
+    .btn {
+        width: 100%; /* Assicura che i bottoni occupino tutta la larghezza */
+    }
+
+    .btn-light {
+        background-color: white; /* Colore di sfondo bianco */
+        color: black; /* Colore del testo nero */
+        border: 1px solid black; /* Bordo nero */
+    }
+
     .btn-dark {
-        background-color: black;
-        border: none;
+        background-color: black; /* Colore di sfondo nero */
+        color: white; /* Colore del testo bianco */
+        border: 1px solid black; /* Bordo nero */
+    }
+
+    .btn.active {
+        background-color: black; /* Colore di sfondo nero per il bottone attivo */
+        color: white; /* Colore del testo bianco per il bottone attivo */
     }
 </style>
