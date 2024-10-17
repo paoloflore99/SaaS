@@ -11,7 +11,7 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <div class="card p-3">
+                <div class="card p-3 uniform-card">
                     <label for="contratto"><strong>Tipologia di contratto</strong></label>
                     <select id="contratto" name="contratto" class="form-select">
                         <option value="indeterminato">Tempo indeterminato</option>
@@ -25,34 +25,58 @@
                         <input type="number" name="lordo" class="form-control" required />
                     </div>
 
-                    <label for="agevolazione"><strong>Agevolazione contributiva</strong></label>
-                    <select id="agevolazione" name="agevolazione" class="form-select">
-                        <option value="Nessunaagevolazione">Nessuna agevolazione</option>
-                        <option value="Under30">Under 30</option>
-                        <option value="donna">Donna</option>
-                        <option value="Under50">Under 50</option>
-                    </select>
+                    <div class="mb-3">
+                        <strong>Agevolazione contributiva</strong><br />
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="agevolazione" value="Nessunaagevolazione" checked>
+                            <label class="form-check-label">Nessuna</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="agevolazione" value="Under30">
+                            <label class="form-check-label">Under 30</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="agevolazione" value="donna">
+                            <label class="form-check-label">Donna</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="agevolazione" value="Under50">
+                            <label class="form-check-label">Under 50</label>
+                        </div>
+                    </div>
 
-                    <label for="detrazione"><strong>Detrazione fiscale</strong></label>
-                    <select id="detrazione" name="detrazione" class="form-select">
-                        <option value="Nessunadetrazione">Nessuna detrazione</option>
-                        <option value="inpatriati">Bonus inpatriati</option>
-                        <option value="inpatriati(con figli)">Bonus inpatriati (con figli)</option>
-                    </select>
+                    <div class="mb-3">
+                        <strong>Detrazione fiscale</strong><br />
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="detrazione" value="Nessunadetrazione" checked>
+                            <label class="form-check-label">Nessuna</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="detrazione" value="inpatriati">
+                            <label class="form-check-label">Bonus inpatriati</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="detrazione" value="inpatriati(con figli)">
+                            <label class="form-check-label">Bonus inpatriati (con figli)</label>
+                        </div>
+                    </div>
 
                     <div class="text-end mt-3">
-                        <input type="submit" class="btn btn-small btn-info" value="Calcola">
+                        <input type="submit" class="btn btn-dark w-100" value="Calcola">
                     </div>
+
+                    <!-- Input nascosto per la mensilità -->
+                    <input type="hidden" id="mensilita" name="mensilita" value="12" />
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="card p-3">
+                <div class="card p-3 uniform-card">
                     @if (Model != null)
                     {
                         <div class="mb-3">
                             <label><strong>Seleziona il periodo:</strong></label>
-                            <div class="btn-group" role="group">
+                            <div class="btn-group w-100" role="group">
                                 <button type="button" id="annualeBtn" class="btn btn-primary" onclick="toggleMensileOptions('annuale')">Annuale</button>
                                 <button type="button" id="mensileBtn" class="btn btn-outline-primary" onclick="toggleMensileOptions('mensile')">Mensile</button>
                             </div>
@@ -60,14 +84,13 @@
 
                         <div id="mensileOptions" style="display:none; margin-top: 15px;">
                             <label for="mensilita"><strong>Seleziona le mensilità:</strong></label>
-                            <select id="mensilita" name="mensilita" class="form-select" onchange="updateResults()">
-                                <option value="12">12 Mensilità</option>
-                                <option value="13">13 Mensilità</option>
-                                <option value="14">14 Mensilità</option>
-                            </select>
+                            <div class="btn-group w-100" role="group">
+                                <button type="button" class="btn btn-outline-primary" value="12" onclick="updateResults(this.value)">12 Mensilità</button>
+                                <button type="button" class="btn btn-outline-primary" value="13" onclick="updateResults(this.value)">13 Mensilità</button>
+                                <button type="button" class="btn btn-outline-primary" value="14" onclick="updateResults(this.value)">14 Mensilità</button>
+                            </div>
                         </div>
 
-                        <!-- Visualizzazione Annuale -->
                         <div id="risultatiAnnuali">
                             <p><strong>Costo Azienda</strong> €@Model.CostoTotale</p>
                             <p><strong>Stipendio lordo</strong> €@Model.Lordo</p>
@@ -92,7 +115,7 @@
                     }
                     else
                     {
-                        <p>Non ci sono dati da mostrare.</p>
+                        <p>Attendere il calcolo dei risultati.</p>
                     }
                 </div>
             </div>
@@ -116,6 +139,12 @@
             annualeBtn.classList.add("btn-outline-primary");
             risultatiAnnuali.style.display = "none";
             risultatiMensili.style.display = "block";
+
+            // Imposta il valore dell'input nascosto su 12
+            document.getElementById("mensilita").value = "12";
+
+            // Aggiorna i risultati per il valore predefinito di 12
+            updateResults("12");
         } else {
             mensileOptions.style.display = "none";
             annualeBtn.classList.add("btn-primary");
@@ -127,10 +156,28 @@
         }
     }
 
-    function updateResults() {
-        var mensilita = document.getElementById("mensilita").value;
-        document.getElementById("risultatoMensile12").style.display = mensilita === "12" ? "block" : "none";
-        document.getElementById("risultatoMensile13").style.display = mensilita === "13" ? "block" : "none";
-        document.getElementById("risultatoMensile14").style.display = mensilita === "14" ? "block" : "none";
+    function updateResults(mensilita) {
+        // Logica per calcolare i risultati in base alla mensilità selezionata
+        // Ad esempio, mostrerai i risultati in base a mensilita
+        // Mostra e nascondi i risultati appropriati
+        var risultatoMensile12 = document.getElementById("risultatoMensile12");
+        var risultatoMensile13 = document.getElementById("risultatoMensile13");
+        var risultatoMensile14 = document.getElementById("risultatoMensile14");
+
+        risultatoMensile12.style.display = mensilita === "12" ? "block" : "none";
+        risultatoMensile13.style.display = mensilita === "13" ? "block" : "none";
+        risultatoMensile14.style.display = mensilita === "14" ? "block" : "none";
     }
 </script>
+
+
+<style>
+    .uniform-card {
+        min-height: 100%; /* Uniform height for both cards */
+    }
+
+    .btn-dark {
+        background-color: black;
+        border: none;
+    }
+</style>
