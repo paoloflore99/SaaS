@@ -12,9 +12,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="card p-3">
-                    <h3>Inserisci i Dati</h3>
-
-                    <label for="contratto">Tipologia di contratto:</label>
+                    <label for="contratto"><strong>Tipologia di contratto</strong></label>
                     <select id="contratto" name="contratto" class="form-select">
                         <option value="indeterminato">Tempo indeterminato</option>
                         <option value="determinato">Tempo determinato</option>
@@ -27,7 +25,7 @@
                         <input type="number" name="lordo" class="form-control" required />
                     </div>
 
-                    <label for="agevolazione">Agevolazione contributiva:</label>
+                    <label for="agevolazione"><strong>Agevolazione contributiva</strong></label>
                     <select id="agevolazione" name="agevolazione" class="form-select">
                         <option value="Nessunaagevolazione">Nessuna agevolazione</option>
                         <option value="Under30">Under 30</option>
@@ -35,7 +33,7 @@
                         <option value="Under50">Under 50</option>
                     </select>
 
-                    <label for="detrazione">Detrazione fiscale:</label>
+                    <label for="detrazione"><strong>Detrazione fiscale</strong></label>
                     <select id="detrazione" name="detrazione" class="form-select">
                         <option value="Nessunadetrazione">Nessuna detrazione</option>
                         <option value="inpatriati">Bonus inpatriati</option>
@@ -50,23 +48,18 @@
 
             <div class="col-md-6">
                 <div class="card p-3">
-                    <h3>Risultati</h3>
                     @if (Model != null)
                     {
-                        <p><strong>Costo Totale per l'Azienda:</strong> €@Model.CostoTotale</p>
-                        <p><strong>Lordo:</strong> €@Model.Lordo</p>
-                        <p><strong>Netto:</strong> €@Model.Netto</p>
-
                         <div class="mb-3">
-                            <label for="periodo">Seleziona il periodo:</label>
-                            <select id="periodo" name="periodo" class="form-select" onchange="toggleMensileOptions(this.value)">
-                                <option value="annuale">Annuale</option>
-                                <option value="mensile">Mensile</option>
-                            </select>
+                            <label><strong>Seleziona il periodo:</strong></label>
+                            <div class="btn-group" role="group">
+                                <button type="button" id="annualeBtn" class="btn btn-primary" onclick="toggleMensileOptions('annuale')">Annuale</button>
+                                <button type="button" id="mensileBtn" class="btn btn-outline-primary" onclick="toggleMensileOptions('mensile')">Mensile</button>
+                            </div>
                         </div>
 
-                        <div id="mensileOptions" style="display:none;">
-                            <label for="mensilita">Seleziona le mensilità:</label>
+                        <div id="mensileOptions" style="display:none; margin-top: 15px;">
+                            <label for="mensilita"><strong>Seleziona le mensilità:</strong></label>
                             <select id="mensilita" name="mensilita" class="form-select" onchange="updateResults()">
                                 <option value="12">12 Mensilità</option>
                                 <option value="13">13 Mensilità</option>
@@ -74,9 +67,16 @@
                             </select>
                         </div>
 
-                        <!-- Risultati Dinamici -->
-                        <div id="risultatiMensili" style="margin-top: 20px;">
-                            <div id="risultatoMensile12" style="display: block;">
+                        <!-- Visualizzazione Annuale -->
+                        <div id="risultatiAnnuali">
+                            <p><strong>Costo Azienda</strong> €@Model.CostoTotale</p>
+                            <p><strong>Stipendio lordo</strong> €@Model.Lordo</p>
+                            <p><strong>Stipendio netto</strong> €@Model.Netto</p>
+                        </div>
+
+                        <!-- Visualizzazione Mensile -->
+                        <div id="risultatiMensili" style="display:none; margin-top: 20px;">
+                            <div id="risultatoMensile12" style="display: none;">
                                 <p><strong>Mese Lordo:</strong> €@Model.MeseLordo</p>
                                 <p><strong>Mese Netto:</strong> €@Model.MeseNetto</p>
                             </div>
@@ -103,8 +103,28 @@
 <script>
     function toggleMensileOptions(periodo) {
         var mensileOptions = document.getElementById("mensileOptions");
-        mensileOptions.style.display = periodo === "mensile" ? "block" : "none";
-        updateResults(); // Aggiorna i risultati quando il periodo cambia
+        var annualeBtn = document.getElementById("annualeBtn");
+        var mensileBtn = document.getElementById("mensileBtn");
+        var risultatiAnnuali = document.getElementById("risultatiAnnuali");
+        var risultatiMensili = document.getElementById("risultatiMensili");
+
+        if (periodo === "mensile") {
+            mensileOptions.style.display = "block";
+            mensileBtn.classList.add("btn-primary");
+            mensileBtn.classList.remove("btn-outline-primary");
+            annualeBtn.classList.remove("btn-primary");
+            annualeBtn.classList.add("btn-outline-primary");
+            risultatiAnnuali.style.display = "none";
+            risultatiMensili.style.display = "block";
+        } else {
+            mensileOptions.style.display = "none";
+            annualeBtn.classList.add("btn-primary");
+            annualeBtn.classList.remove("btn-outline-primary");
+            mensileBtn.classList.remove("btn-primary");
+            mensileBtn.classList.add("btn-outline-primary");
+            risultatiAnnuali.style.display = "block";
+            risultatiMensili.style.display = "none";
+        }
     }
 
     function updateResults() {
