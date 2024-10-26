@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SaaS.Areas.Identity.Data;
 namespace SaaS
 {
     public class Program
@@ -5,10 +8,16 @@ namespace SaaS
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+                        //var connectionString = builder.Configuration.GetConnectionString("ProfileContextConnection") ?? throw new InvalidOperationException("Connection string 'ProfileContextConnection' not found.");
+
+                                    builder.Services.AddDbContext<ProfileContext>();
+
+                                                builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ProfileContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -23,12 +32,14 @@ namespace SaaS
             app.UseStaticFiles();
 
             app.UseRouting();
+                        app.UseAuthentication();;
 
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }
