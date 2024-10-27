@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SaaS.Areas.Identity.Data;
+using SaaS.Models;
 namespace SaaS
 {
     public class Program
@@ -8,12 +9,13 @@ namespace SaaS
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-                        //var connectionString = builder.Configuration.GetConnectionString("ProfileContextConnection") ?? throw new InvalidOperationException("Connection string 'ProfileContextConnection' not found.");
+            //var connectionString = builder.Configuration.GetConnectionString("ProfileContextConnection") ?? throw new InvalidOperationException("Connection string 'ProfileContextConnection' not found.");
 
-                                    builder.Services.AddDbContext<ProfileContext>();
+            builder.Services.AddDbContext<SaasDbContext>();
 
-                                                builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ProfileContext>();
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<SaasDbContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -32,7 +34,7 @@ namespace SaaS
             app.UseStaticFiles();
 
             app.UseRouting();
-                        app.UseAuthentication();;
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
