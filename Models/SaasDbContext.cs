@@ -7,11 +7,11 @@ namespace SaaS.Models
 {
     public class SaasDbContext : IdentityDbContext<IdentityUser>
     {
-        public Prova? prova { get; set; }
+        public DbSet<Prova>? Prove { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=SaasDb;Integrated Security=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=SaasDb;Integrated Security=True;TrustServerCertificate=True");
         }
     }
 }

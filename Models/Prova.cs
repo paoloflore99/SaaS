@@ -1,7 +1,11 @@
-﻿namespace SaaS.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SaaS.Models
 {
     public class Prova
     {
+        [Key]
+        public int Id { get; set; }
         public string? prova { get; set; }
 
         public Prova() { }
