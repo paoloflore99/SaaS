@@ -71,7 +71,7 @@ namespace SaaS.Controllers
                     break;
             }
 
-
+           
 
             decimal contributiPrevidenziali = lordo * ((percentualePrevidenziale - agevolazionePercentuale) / 100);
             decimal redditoImponibile = lordo - contributiPrevidenziali;
